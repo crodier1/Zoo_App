@@ -39,6 +39,14 @@
                 android:layout_height="wrap_content"
                 android:text="Baboon lives in the zoo with other animals" />
 
+            <TextView
+                android:id="@+id/tvDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textColor="#647BFC"
+                android:textIsSelectable="false" />
+
         </LinearLayout>
     </LinearLayout>
 

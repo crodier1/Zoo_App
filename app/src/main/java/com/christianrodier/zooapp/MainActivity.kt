@@ -2,6 +2,7 @@ package com.christianrodier.zooapp
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PostProcessor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.animal_ticket.view.*
-import java.util.zip.Inflater
+import kotlinx.android.synthetic.main.animal_killer_ticket.view.*
+import kotlinx.android.synthetic.main.animal_ticket.view.ivAnimalImage
+import kotlinx.android.synthetic.main.animal_ticket.view.tvDescription
+import kotlinx.android.synthetic.main.animal_ticket.view.tvName
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +41,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    class AnimalsAdapter: BaseAdapter {
+    fun delete(index: Int){
+        listOfAnimals.removeAt(index)
+
+        adapter!!.notifyDataSetChanged()
+
+    }
+
+    inner class AnimalsAdapter: BaseAdapter {
         var listOfAnimals = ArrayList<Animal>()
         var context: Context? = null
 
@@ -48,13 +58,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+
+
             val animal = listOfAnimals[position]
+
 
             var inflater = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
             var animalView: View = setAnimalView(animal.isKiller, inflater, animal)
 
-            setAnimalTickerOnClickListener(animalView ,animal)
+            setAnimalPictureOnClickListener(animalView ,animal)
+
+            setAnimalDeleteOnClickListener(animalView,position)
+
 
             return animalView
 
@@ -76,16 +92,22 @@ class MainActivity : AppCompatActivity() {
             myView.tvName.text = animal.name!!
             myView.tvDescription.text = animal.description!!
             myView.ivAnimalImage.setImageResource(animal.image!!)
+            myView.tvDelete.text = "Delete"
 
             return myView
 
         }
 
 
-        private fun setAnimalTickerOnClickListener(myView: View?, animal: Animal) {
+        private fun setAnimalPictureOnClickListener(myView: View?, animal: Animal) {
+
+
             var myView = myView
 
             myView!!.ivAnimalImage.setOnClickListener{
+
+                //
+
                 val intent = Intent(context, AnimalDetails::class.java)
 
                 intent.putExtra(AnimalIntentVars.name, animal.name!!)
@@ -95,6 +117,15 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        private fun setAnimalDeleteOnClickListener(animalView: View, index: Int){
+            var deleteAnimalView = animalView
+
+            deleteAnimalView.tvDelete.setOnClickListener{
+                delete(index)
+            }
+        }
+
 
         override fun getItem(position: Int): Any {
             return listOfAnimals[position]
