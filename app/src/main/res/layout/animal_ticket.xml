@@ -16,8 +16,9 @@
 
         <ImageView
             android:id="@+id/ivAnimalImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_marginRight="5sp"
             app:srcCompat="@drawable/baboon" />
 
         <LinearLayout
@@ -41,11 +42,20 @@
 
             <TextView
                 android:id="@+id/tvDelete"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete"
                 android:textColor="#647BFC"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tvDuplicate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copy"
+                android:textColor="#F44336"
+                android:textSize="10sp" />
 
         </LinearLayout>
     </LinearLayout>

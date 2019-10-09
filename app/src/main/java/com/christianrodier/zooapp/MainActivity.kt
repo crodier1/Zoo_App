@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.animal_killer_ticket.view.*
+import kotlinx.android.synthetic.main.animal_killer_ticket.view.tvDelete
+import kotlinx.android.synthetic.main.animal_ticket.*
+import kotlinx.android.synthetic.main.animal_ticket.view.*
 import kotlinx.android.synthetic.main.animal_ticket.view.ivAnimalImage
 import kotlinx.android.synthetic.main.animal_ticket.view.tvDescription
 import kotlinx.android.synthetic.main.animal_ticket.view.tvName
@@ -41,11 +44,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun delete(index: Int){
+    private fun delete(index: Int){
         listOfAnimals.removeAt(index)
 
         adapter!!.notifyDataSetChanged()
 
+    }
+
+    private fun duplicate(index: Int){
+        var animal = listOfAnimals.get(index)
+
+        listOfAnimals.add(animal)
+        adapter!!.notifyDataSetChanged()
     }
 
     inner class AnimalsAdapter: BaseAdapter {
@@ -71,6 +81,8 @@ class MainActivity : AppCompatActivity() {
 
             setAnimalDeleteOnClickListener(animalView,position)
 
+            setAnimalDuplicateOnClickListener(animalView, position)
+
 
             return animalView
 
@@ -93,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             myView.tvDescription.text = animal.description!!
             myView.ivAnimalImage.setImageResource(animal.image!!)
             myView.tvDelete.text = "Delete"
+
 
             return myView
 
@@ -124,6 +137,18 @@ class MainActivity : AppCompatActivity() {
             deleteAnimalView.tvDelete.setOnClickListener{
                 delete(index)
             }
+        }
+
+        private fun setAnimalDuplicateOnClickListener(animalView: View, index: Int){
+
+            var duplicateAnimalView = animalView
+
+            duplicateAnimalView.setOnClickListener{
+
+                duplicate(index)
+            }
+
+
         }
 
 
